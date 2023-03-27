@@ -1,0 +1,178 @@
+---
+title: "Statistical Comparison of Palestine and Israel"
+author: "Omar Shakhtour"
+output: html_document
+date: '2023-03-16'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This study is a statistical comparison of different types of data between Palestine and Israel. 
+
+This will give a comprehensive view of the difference between the
+two states. The topics covered include financial markers such as GDP, educational markers such as educational enrollment, and societal markers, such as refugee populations.
+
+This study is important because it will highlight the vast difference between the two states, even though they were once one land together under the name of Palestine. But,
+after the partition of the state and the illegal abduction of Palestinian land, and the forced exile of the Palestinian people, we see a huge disparity between the two states.
+Israel is strongly supported by other nations and given significant sums of money to develop the state. Meanwhile, Palestine is struggling to survive under the iron fist
+of the Israeli occupation.
+
+This study uses data from the World Bank. This data can be accessed here: https://data.worldbank.org/indicator?tab=featured
+
+***
+
+## Results
+
+In the following code chunk we install the WDI and ggplot packages. The WDI package is used to access World Bank data, while the ggplot package is used for graphing the data.
+
+```{r}
+# install.packages("WDI")
+# install.packages("ggplot2")
+```
+
+```{r}
+library(WDI)
+library(ggplot2)
+```
+
+# Case Study 1: Financial Comparison
+
+The following code displays a Bar Graph comparing the GDP of Palestine to that of Israel for the year 2020:
+
+```{r}
+gdp_data = WDI(country=c("PS", "IL"), indicator="NY.GDP.PCAP.KD", start=2020, end=2021, extra=TRUE)
+
+ggplot(data = gdp_data, aes(x = country, y = NY.GDP.PCAP.KD, fill = country)) +
+  geom_bar(stat = "identity") + scale_fill_manual(values=c("#0038b8","#009736")) +
+  labs(title = "GDP comparison of Palestine and Israel in 2015",
+       x = " ",
+       y = "GDP per Capita in USD",
+       fill = "Country")+
+      theme(plot.title = element_text(hjust = 0.5))
+```
+
+***
+
+The following code displays the degree of foreign investments in both states:
+
+```{r}
+gdp_data = WDI(country=c("PS", "IL"), indicator="BX.KLT.DINV.CD.WD", start=2011, end=2021, extra=TRUE)
+
+invest <- ggplot(data = gdp_data, aes(x = year, y = BX.KLT.DINV.CD.WD, group = country)) +
+  geom_line(aes(color = country)) + scale_color_manual(values=c("#0038b8", "#009736")) +
+  labs(title = "Foreign direct investment, net inflows",
+       x = "Year",
+       y = "Foreign Invesment (USD)",
+       color = "Country")+
+      theme(plot.title = element_text(hjust = 0.5))
+
+invest + scale_x_continuous(breaks = seq(min(gdp_data$year), max(gdp_data$year), by = 1)) + scale_y_continuous(labels=scales::comma)
+```
+
+***
+
+# Case Study 2: Educational Comparison
+
+The following code displays the percent of university-level school enrollment over 10 years in both states:
+
+```{r}
+gdp_data = WDI(country=c("PS", "IL"), indicator="SE.TER.ENRR", start=2010, end=2020, extra=TRUE)
+
+invest <- ggplot(data = gdp_data, aes(x = year, y = SE.TER.ENRR, group = country)) +
+  geom_area(aes(fill = country), color = "black") + 
+  scale_fill_manual(values=c("lightblue", "lightgreen")) +
+  labs(title = "% of tertiary school enrollment between 2010 & 2020",
+       x = "Year",
+       y = "% of tertiary school enrollment",
+       fill = "Country")+
+      theme(plot.title = element_text(hjust = 0.5))
+
+invest + scale_x_continuous(breaks = seq(min(gdp_data$year), max(gdp_data$year), by = 1)) + scale_y_continuous(labels=scales::comma)
+```
+
+***
+
+The following code displays the percent of university-level school enrollment over 20 years in both states:
+
+```{r}
+gdp_data = WDI(country=c("PS", "IL"), indicator="SL.UEM.TOTL.MA.ZS", start=2001, end=2021, extra=TRUE)
+
+invest <- ggplot(data = gdp_data, aes(x = year, y = SL.UEM.TOTL.MA.ZS, group = country)) +
+  geom_line(aes(color = country)) + scale_color_manual(values=c("#0038b8", "#009736")) +
+  labs(title = "% of the male labour force that is unemployed",
+       x = "Year",
+       y = "% of male unemployment",
+       color = "Country")+
+      theme(plot.title = element_text(hjust = 0.5))
+
+invest + scale_x_continuous(breaks = seq(min(gdp_data$year), max(gdp_data$year), by = 2)) + scale_y_continuous(labels=scales::comma)
+```
+
+
+***
+
+
+# Case Study 3: Social Development Comparison
+
+The following code displays a bar graph of the refugee population by country of origin:
+
+```{r}
+gdp_data = WDI(country=c("PS", "IL"), indicator="SM.POP.REFG.OR", start=2020, end=2021, extra=TRUE)
+
+ggplot(data = gdp_data, aes(x = country, y = SM.POP.REFG.OR, fill = country)) +
+  geom_bar(stat = "identity") + scale_fill_manual(values=c("black","lightgreen")) +
+  labs(title = "Refugee population by country of origin",
+       x = " ",
+       y = "Refugee population by country",
+       fill = "Country")+
+      theme(plot.title = element_text(hjust = 0.5))
+```
+
+***
+
+## Discussion
+
+As we witnessed in the results section, there is a huge disparity between Palestine and Israel in different categories.
+
+* The first graph, displaying the GDP comparison, shows the significant difference in GDP per capita in 2020 between Palestine and Israel. This makes clear the large
+disparity in the wealth of the two states. How can this be the case, when the land was once all one, united land? Let's continue our analysis to draw the conclusion:
+
+* The second graph, displaying the degree of foreign investments highlights a huge gap. In 2021, Israel received around $20 billion in foreign investments! Meanwhile,
+Palestine received almost nothing. This evidently shows the degree to which other countries strongly financial support Israel while Palestine receives
+very little.
+
+* The third graph, displaying the percent of tertiary level school enrollment shows how a significant majority of Israelis enroll in tertiary school, such as universities, while less than half the Palestinian population enrolls in tertiary school. When the finances are low, the educational institutions will suffer as well. Furthermore,
+university-level education is not a priority when one is simply trying to survive.
+
+* The fourth graph, displaying the percent of the male labour force that is employed showed how Israel is almost double that of Palestine.
+
+* Finally, the fifth graph, displaying the refugee population coming from Palestine versus that of Israel, shows the most significant difference out of all of these graphs.
+This saddening graph shows how the number of refugees coming from Palestine, up to 2021, has reached more than 200,000 people. Meanwhile, there are no refugees coming
+from Israel. This saddening statistic makes one ponder how those who have their history and ancestors in the land of Palestine are now a huge group
+of refugees being forced to leave that land where their grandparents grew up.
+
+All these graphs are connected in some way. The lack of foreign investments in Palestine contributes to the lack of development and infrastructure. This in turn contributes
+to the low GDP in Palestine. The low GDP means a weaker economy, when is tied to less jobs and more unemployment. Therefore, when there is financial struggle in this regard
+tertiary education goes on the back burner and it is not a priority in people's lives.
+
+If we take a look at history, the Nakba in 1948 was the forced exiling of Palestinians by the Israeli government. This, coupled with the continued illegal Israeli settlements 
+that is slowly stealing Palestinian land, gives context to the massive number of refugees we saw in the fifth graph.
+
+***
+
+## Conclusion
+
+To conclude, this study has shown:
+
+* There is a huge disparity between Palestine and Israel in the areas of finance, education, and society.
+* Many of the statistics shown about Palestine are directly or indirectly tied to one another.
+* It is clear that the the history of the past century is significantly correlated to the current statistics.
+
+Such a study can be useful for those looking to understand how the illegal Israeli occupation has significantly impacted the Palestinian people. The study
+can be used to help present data and inform people so that a significant change can be made.
+
+
