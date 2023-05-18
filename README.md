@@ -9,4 +9,4 @@ Using data from the World Bank, this study highlights the vast difference betwee
 
 ***
 
-The study can be viewed using the following GitHub pages link: https://omar-shakhtour.github.io/Palestine-Statistical-Comparison/
+The study can be viewed using the following GitHub pages link: [https://omar-shakhtour.github.io/Palestine-Statistical-Comparison/](https://omar-shakhtour.github.io/Palestine-R-Statistical-Comparison/)
